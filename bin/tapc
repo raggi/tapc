@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# A basic TAP colorizer.
+
+while IFS= read -r line ; do
+	if [[ "$line" =~ [0-9]+\.\.[0-9]+ ]]; then
+		printf "\e[1;33m%s\e[0m\n" "$line"
+		continue
+	fi
+
+	if [[ "$line" =~ ^ok\ [0-9]+ ]]; then
+		printf "\e[1;32m%s\e[0m\n" "$line"
+		continue
+	fi
+
+	if [[ "$line" =~ ^not\ ok\ [0-9]+ ]]; then
+		printf "\e[1;31m%s\e[0m\n" "$line"
+		continue
+	fi
+
+	printf "%s\n" "$line"
+done <&0
